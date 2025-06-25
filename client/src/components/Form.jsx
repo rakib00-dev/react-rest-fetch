@@ -21,7 +21,7 @@ const Form = () => {
     mutationFn: createTodo(text),
     onSuccess: () => {
       console.log('success')
-      queryClient.invalidateQueries({ queryKey: ['todo'] })
+      queryClient.invalidateQueries(['todo'])
     },
     onError: () => {
       console.log('error')
