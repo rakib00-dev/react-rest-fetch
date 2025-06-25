@@ -1,25 +1,18 @@
-import { QueryClient, useQueryClient } from '@tanstack/react-query'
+import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query'
+import Form from './components/Form'
 
 function App() {
-  // console.log(useQuery)
+  const { data } = useQuery({
+    queryKey: ['todo'],
+    queryFn: async () =>
+      await (await fetch('http://localhost:8000/todo')).json(),
+  })
 
-  const queryClient = useQueryClient()
+  console.log(data)
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form></Form>
     </div>
   )
 }

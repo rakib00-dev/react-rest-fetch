@@ -1,0 +1,40 @@
+import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
+
+const createTodo = (text) => {
+  return () => {
+    fetch('http://localhost:8000/todo/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title: text }),
+    })
+  }
+}
+
+const Form = () => {
+  const [text, setText] = useState('')
+
+  const todoMutation = useMutation({
+    mutationFn: createTodo(text),
+    onSuccess: () => {
+      console.log('success')
+    },
+    onError: () => {
+      console.log('error')
+    },
+  })
+  return (
+    <div>
+      <input
+        type="text"
+        onChange={(e) => setText(e.target.value)}
+        value={text}
+      />
+      <button onClick={() => todoMutation.mutate()}>Create</button>
+    </div>
+  )
+}
+
+export default Form
