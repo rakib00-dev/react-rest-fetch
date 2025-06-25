@@ -12,7 +12,8 @@ function App() {
 
   return (
     <div className="App">
-      <Form></Form>
+      <Form />
+      {data && data.data && data.data.map((t, i) => <li key={i}>{t.title}</li>)}
     </div>
   )
 }

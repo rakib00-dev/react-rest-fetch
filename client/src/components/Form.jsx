@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
 const createTodo = (text) => {
@@ -15,11 +15,13 @@ const createTodo = (text) => {
 
 const Form = () => {
   const [text, setText] = useState('')
+  const queryClient = useQueryClient()
 
   const todoMutation = useMutation({
     mutationFn: createTodo(text),
     onSuccess: () => {
       console.log('success')
+      queryClient.invalidateQueries({ queryKey: ['todo'] })
     },
     onError: () => {
       console.log('error')
